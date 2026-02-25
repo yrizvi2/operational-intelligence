@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Data outputs (we will decide later what to keep)
+data/*.csv
+data/*.db
+
+# Streamlit
+.streamlit/
+
+# VS Code
+.vscode/

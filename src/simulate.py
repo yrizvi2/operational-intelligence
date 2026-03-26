@@ -21,6 +21,13 @@ def generate_memory_usage():
     # Simulate normal memory usage between 40% and 80%
     return round(random.uniform(40, 80), 2)
 
+def generate_latency_ms(index: int):
+    # Inject a short latency spike during the same anomaly window
+    if 20 <= index <= 25:
+        return round(random.uniform(300, 500), 2)
+        # Simulate normal latency between 80ms and 150ms
+    return round(random.uniform(80, 150), 2)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--minutes", type=int, default=DEFAULT_MINUTES)
@@ -33,15 +40,17 @@ def main():
     with open("data/telemetry.csv", mode="w", newline="") as file:
         writer = csv.writer(file)
 
-        writer.writerow(["timestamp", "cpu_usage", "memory_usage"])
+        writer.writerow(["timestamp", "cpu_usage", "memory_usage", "latency_ms"])
 
         for i in range(total_points):
             writer.writerow([
                 current_time.isoformat(),
                 generate_cpu_usage(i),
-                generate_memory_usage()
+                generate_memory_usage(),
+                generate_latency_ms(i)
             ])
             current_time += timedelta(minutes=INTERVAL_MINUTES)
+            
 
 if __name__ == "__main__":
     main()
